@@ -266,8 +266,14 @@ rule VULN_BRCM_WPS_EAP_Fragment_Reassembly_ELF
                         and @arm_sub_14[i] < segment.offset + segment.file_size
                      )
                   )
-                  and #arm_sub_14 in (@arm_sub_14[i]..@arm_sub_14[i] + 0x1000) >= 2
-                  and #arm_add_810 in (@arm_sub_14[i]..@arm_sub_14[i] + 0x1000) >= 2
+                  and for 2 j in (1..#arm_sub_14) : (
+                     @arm_sub_14[j] >= @arm_sub_14[i]
+                     and @arm_sub_14[j] <= @arm_sub_14[i] + 0x1000
+                  )
+                  and for 2 j in (1..#arm_add_810) : (
+                     @arm_add_810[j] >= @arm_sub_14[i]
+                     and @arm_add_810[j] <= @arm_sub_14[i] + 0x1000
+                  )
                   and (
                      (
                         $arm_movw_1014 in (@arm_sub_14[i]..@arm_sub_14[i] + 0x1000)
@@ -290,7 +296,10 @@ rule VULN_BRCM_WPS_EAP_Fragment_Reassembly_ELF
                or $mips_ap_eap_sm_process_sta_msg
                or for any i in (1..#mips_be_sub_14) : (
                   @mips_be_sub_14[i] % 4 == 0
-                  and #mips_be_sub_14 in (@mips_be_sub_14[i]..@mips_be_sub_14[i] + 0x1000) >= 2
+                  and for 2 j in (1..#mips_be_sub_14) : (
+                     @mips_be_sub_14[j] >= @mips_be_sub_14[i]
+                     and @mips_be_sub_14[j] <= @mips_be_sub_14[i] + 0x1000
+                  )
                   and $mips_be_declared in (@mips_be_sub_14[i]..@mips_be_sub_14[i] + 0x1000)
                   and $mips_be_total in (@mips_be_sub_14[i]..@mips_be_sub_14[i] + 0x1000)
                   and $mips_be_buffer in (@mips_be_sub_14[i]..@mips_be_sub_14[i] + 0x1000)
@@ -302,7 +311,10 @@ rule VULN_BRCM_WPS_EAP_Fragment_Reassembly_ELF
             and uint16(0x12) == 0x0008
             and for any i in (1..#mips_le_sub_14) : (
                @mips_le_sub_14[i] % 4 == 0
-               and #mips_le_sub_14 in (@mips_le_sub_14[i]..@mips_le_sub_14[i] + 0x1000) >= 2
+               and for 2 j in (1..#mips_le_sub_14) : (
+                  @mips_le_sub_14[j] >= @mips_le_sub_14[i]
+                  and @mips_le_sub_14[j] <= @mips_le_sub_14[i] + 0x1000
+               )
                and $mips_le_declared in (@mips_le_sub_14[i]..@mips_le_sub_14[i] + 0x1000)
                and $mips_le_total in (@mips_le_sub_14[i]..@mips_le_sub_14[i] + 0x1000)
                and $mips_le_buffer in (@mips_le_sub_14[i]..@mips_le_sub_14[i] + 0x1000)
