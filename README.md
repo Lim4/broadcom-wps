@@ -147,6 +147,7 @@ the fingerprinting script using a wireless interface in monitor mode.
 | NetComm | NF10W | ALL | Y | Exetel, Aussie Broadband, Harbour ISP |
 | NetComm | NF10WV | ALL | Y | Exetel, Aussie Broadband |
 | NetComm | NF8AC | ALL | Y | Activ8me, Mate, SkyMesh, Aussie Broadband |
+| NetComm | NF17ACV | ALL | Y | SkyMesh, Aussie Broadband | 
 | Netgear | CG3100 | ALL | Y | Orange Belgium, VOO |
 | Netgear | CG3700B | ALL | Y | Orange Belgium, VOO |
 | Sagemcom | F@st XXX | ALL | Y | Proximus |
