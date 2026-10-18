@@ -153,6 +153,7 @@ the fingerprinting script using a wireless interface in monitor mode.
 | Netgear | CG3100 | ALL | Y | Orange Belgium, VOO |
 | Netgear | CG3700B | ALL | Y | Orange Belgium, VOO |
 | Sagemcom | F@ST 3864 / 3864OP | ALL | Y | Optus |
+| Sagemcom | F@ST 4353 | ALL | Y | Belong |
 | Sagemcom | F@st XXX | ALL | Y | Proximus |
 | Neuf | NB6 | TODO | Y | SFR | 
 | Neuf | NB6VAC | TODO | Y | SFR |
