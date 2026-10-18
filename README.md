@@ -169,6 +169,6 @@ the fingerprinting script using a wireless interface in monitor mode.
 | ZTE | F680 v4 | ALL | Y | MasMovil, ThailandToT, Telkom, Linkstar, Mnc, Viettel, VNPT, SeteTec, EgyptTEData, Ais, MTN, FranceReunicable, RTC, Indosat, MAXCom, EKT, OSP, Moldtelecom, Türk Telekom, TurkNet, AtlantisNet |
 | ZTE | 368N | ALL | Y | KPN (device is called "Experia Box v9"), Türk Telekom |
 | Zyxel | VMG3312-B10A, VMG3312-B10B | ALL | Y | Türk Telekom |
-| MitraStar | GPT-2541GNAC | up to at least 100VNJ0b38 | Y | Movistar / Telefonica |
+| MitraStar | GPT-2541GNAC | up to at least ES_g8.4_100VNJ0b78 | Y | Movistar / Telefonica |
 
 
