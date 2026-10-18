@@ -143,13 +143,24 @@ the fingerprinting script using a wireless interface in monitor mode.
 | Huawei | B315 | - | ALL | - |
 | Huawei | B593 | - | ALL | - |
 | Huawei | WS880 | - | ALL | - |
+| NetComm | NF4V | ALL | Y | Exetel, Harbour ISP, Spintel |
+| NetComm | NF10W | ALL | Y | Exetel, Aussie Broadband, Harbour ISP |
+| NetComm | NF10WV | ALL | Y | Exetel, Aussie Broadband |
+| NetComm | NF8AC | ALL | Y | Activ8me, Mate, SkyMesh, Aussie Broadband |
+| NetComm | NF17ACV | ALL | Y | SkyMesh, Aussie Broadband | 
+| NetComm | NF18ACV | ALL | Y | Aussie Broadband, Tangerine, Mate, Spintel |
+| NetComm | NF18MESH | ALL | Y | Aussie Broadband |
 | Netgear | CG3100 | ALL | Y | Orange Belgium, VOO |
 | Netgear | CG3700B | ALL | Y | Orange Belgium, VOO |
+| Sagemcom | F@ST 3864 / 3864OP | ALL | Y | Optus |
+| Sagemcom | F@ST 4353 | ALL | Y | Belong |
 | Sagemcom | F@st XXX | ALL | Y | Proximus |
 | Neuf | NB6 | TODO | Y | SFR | 
 | Neuf | NB6VAC | TODO | Y | SFR |
 | Nokia | G-140W-H, G-240W-B, G-240W-A, G-240W-C, G-240W-F, G-240W-G, G-240W-J, G-2426G-A | ? | Y | Telmex, Speedy, ETB, Axtel, lucascell, STC, Du Telecom, Kazakhtelecom, Türk Telecom, Wind, Viettel, Etisalat, GO Telecom, True Internet, Singtel, Vodafone Turkey, Lattelekom, Sky Telecom, Vivacom, Proximus, Orange Ivory Coast, Canalbox Caraibes, Inea |
 | Tenda | D301 / N300 | - | - | - |
+| TP-Link | VR1600 | ALL | Y | OntheNet, Future Broadband, Internode |
+| TP-Link | TD-VG5612 | ALL | Y | MyNetFone, Barefoot, OntheNet |
 | TP-Link | Archer C3150 | ALL | Y | Türk Telekom |
 | TP-Link | Archer C5400 | ALL | Y | Türk Telekom |
 | TP-Link | Archer VR600 | ALL | Y | Türk Telekom |
