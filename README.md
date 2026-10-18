@@ -143,6 +143,7 @@ the fingerprinting script using a wireless interface in monitor mode.
 | Huawei | B315 | - | ALL | - |
 | Huawei | B593 | - | ALL | - |
 | Huawei | WS880 | - | ALL | - |
+| NetComm | NF4V | ALL | Y | Exetel, Harbour ISP, Spintel |
 | Netgear | CG3100 | ALL | Y | Orange Belgium, VOO |
 | Netgear | CG3700B | ALL | Y | Orange Belgium, VOO |
 | Sagemcom | F@st XXX | ALL | Y | Proximus |
