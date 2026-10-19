@@ -91,8 +91,8 @@ while the user space implementation is not from their SDK. We use that signal
 to check if it's Broadcom or not.
 
 If it's a Broadcom AP, we send a zero-lenght fragmented frame to differentiate
-between Broadcom's wps_monitor and hostapd. hostapd sends a NACK while
-wps_monitor sends an ACK (in a nutshell).
+between Broadcom's wps_monitor and hostapd. hostapd sends an ACK while
+wps_monitor sends a NACK (in a nutshell).
 
 If we have both signals (Broadcom IE + implementation quirk), we can assess
 with a rather high confidence level that you're affected.
