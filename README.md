@@ -124,7 +124,7 @@ strong signal since it's sometimes added by Broadcom's Linux kernel module
 while the user space implementation is not from their SDK. We use that signal
 to check if it's Broadcom or not.
 
-If it's a Broadcom AP, we send a zero-lenght fragmented frame to differentiate
+If it's a Broadcom AP, we send a zero-length fragmented frame to differentiate
 between Broadcom's wps_monitor and hostapd. hostapd sends an ACK while
 wps_monitor sends a NACK (in a nutshell).
 
