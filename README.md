@@ -40,6 +40,15 @@ sudo iw dev wlp0s12u1 set monitor none
 sudo ip link set dev wlp0s12u1 up
 ```
 
+> **Note on hardware:** monitor mode / frame injection is very driver-dependent.
+> In my testing the built-in **Intel Dual Band Wireless-AC 7265** (`iwlwifi`)
+> accepted `type monitor` but captured **zero** frames (no beacons even with a
+> strong signal), so the fingerprinter never locked onto a target. A USB adapter
+> with a MediaTek chipset — **MT7921AU** (USB id `0e8d:7961`, driver `mt7921u`) —
+> worked immediately. If the script keeps sweeping without finding your SSID,
+> suspect the adapter rather than the target. Known-good chipsets for this kind
+> of work include MediaTek `mt76`, Atheros `ath9k_htc`, and Realtek `rtl8812au`.
+
 You should seem something like this on affected devices:
 
 ```
