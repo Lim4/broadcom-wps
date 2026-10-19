@@ -206,4 +206,16 @@ the fingerprinting script using a wireless interface in monitor mode.
 | Zyxel | VMG3312-B10A, VMG3312-B10B | ALL | Y | Türk Telekom |
 | MitraStar | GPT-2541GNAC | up to at least ES_g8.4_100VNJ0b78 | Y | Movistar / Telefonica |
 
+## Not Vulnerable (Patched)
+
+These devices were tested dynamically with the fingerprinting script and reported
+`PATCHED_HOSTAPD`: they are Broadcom-based but run patched hostapd rather than the
+vulnerable `wps_monitor`, so they are **not** affected. Listing them here so others
+don't need to re-test the same models.
+
+| Vendor | Product | Assessment | Method |
+|--------|---------|------------|--------|
+| Sagemcom | F5598T | PATCHED_HOSTAPD | fingerprinting script |
+| Sagemcom | F380B | PATCHED_HOSTAPD | fingerprinting script |
+
 
