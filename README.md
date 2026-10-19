@@ -40,7 +40,7 @@ sudo iw dev wlp0s12u1 set monitor none
 sudo ip link set dev wlp0s12u1 up
 ```
 
-You should seem something like this:
+You should seem something like this on affected devices:
 
 ```
 sudo uv run --with scapy broadcom_fingerprint.py --interface wlp0s12u1 --ssid VOO-111317
@@ -80,6 +80,40 @@ Assessment: LIKELY_VULNERABLE
 JSON:       /tmp/broadcom-fingerprint-20261014T205852.234368Z/result.json
 PCAP:       /tmp/broadcom-fingerprint-20261014T205852.234368Z/traffic.pcap
 ```
+
+On patched devices you'll see:
+
+```
+sudo uv run --with scapy broadcom_fingerprint.py --interface wlp0s12u1 --ssid MY-AP
+Scanning channels 1-13 for SSID 'MY-AP' (sweep 1)...
+SSID:       MY-AP
+BSSID:      38:35:fb:13:4b:42
+Channel:    1
+Vendor:     SagemCom
+Model:      SagemcomFast5336v_BBOX3
+Assessment: PATCHED_HOSTAPD
+JSON:       /tmp/broadcom-fingerprint-20261014T205852.234368Z/result.json
+PCAP:       /tmp/broadcom-fingerprint-20261014T205852.234368Z/traffic.pcap
+```
+
+If your device does not advertise WPS it's not affected and you'll see this:
+
+```
+sudo uv run --with scapy broadcom_fingerprint.py --interface wlx00c0ca588c7e --ssid MY-AP
+Scanning channels 1-13 for SSID 'MY-AP' (sweep 1)...
+SSID:       MY-AP
+BSSID:      1c:0b:8b:xx:xx:xx
+Channel:    6
+Vendor:     Unknown
+Model:      Unknown
+Assessment: INCONCLUSIVE
+JSON:       /tmp/broadcom-fingerprint-20261019T113912.161025Z/result.json
+PCAP:       /tmp/broadcom-fingerprint-20261019T113912.161025Z/traffic.pcap
+Warning: selected AP does not advertise WPS
+```
+
+
+
 
 The fingerprinting script relies on two things:
 1. the presence of Broadcom proprietary information elements
