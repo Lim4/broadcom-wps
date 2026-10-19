@@ -152,20 +152,20 @@ the fingerprinting script using a wireless interface in monitor mode.
 | NetComm | NF18MESH | ALL | Y | Aussie Broadband |
 | Netgear | CG3100 | ALL | Y | Orange Belgium, VOO |
 | Netgear | CG3700B | ALL | Y | Orange Belgium, VOO |
-| Sagemcom | F@ST 3864 / 3864OP | ALL | Y | Optus |
-| Sagemcom | F@ST 4353 | ALL | Y | Belong |
-| Sagemcom | F@st 5336 | ALL | Y | Proximus |
 | Neuf | NB6 | TODO | Y | SFR | 
 | Neuf | NB6VAC | TODO | Y | SFR |
 | Nokia | G-140W-H, G-240W-B, G-240W-A, G-240W-C, G-240W-F, G-240W-G, G-240W-J, G-2426G-A | ? | Y | Telmex, Speedy, ETB, Axtel, lucascell, STC, Du Telecom, Kazakhtelecom, Türk Telecom, Wind, Viettel, Etisalat, GO Telecom, True Internet, Singtel, Vodafone Turkey, Lattelekom, Sky Telecom, Vivacom, Proximus, Orange Ivory Coast, Canalbox Caraibes, Inea |
+| Sagemcom | F@ST 3864 / 3864OP | ALL | Y | Optus |
+| Sagemcom | F@ST 4353 | ALL | Y | Belong |
+| Sagemcom | F@st 5336 | ALL | Y | Proximus |
 | Tenda | D301 / N300 | - | - | - |
-| TP-Link | VR1600 | ALL | Y | OntheNet, Future Broadband, Internode |
-| TP-Link | TD-VG5612 | ALL | Y | MyNetFone, Barefoot, OntheNet |
 | TP-Link | Archer C3150 | ALL | Y | Türk Telekom |
 | TP-Link | Archer C5400 | ALL | Y | Türk Telekom |
+| TP-Link | Archer VR2800 | ALL | Y | Türk Telekom |
 | TP-Link | Archer VR600 | ALL | Y | Türk Telekom |
 | TP-Link | Archer VR900 | ALL | Y | Türk Telekom |
-| TP-Link | Archer VR2800 | ALL | Y | Türk Telekom |
+| TP-Link | TD-VG5612 | ALL | Y | MyNetFone, Barefoot, OntheNet |
+| TP-Link | VR1600 | ALL | Y | OntheNet, Future Broadband, Internode |
 | ZTE | F680 v4 | ALL | Y | MasMovil, ThailandToT, Telkom, Linkstar, Mnc, Viettel, VNPT, SeteTec, EgyptTEData, Ais, MTN, FranceReunicable, RTC, Indosat, MAXCom, EKT, OSP, Moldtelecom, Türk Telekom, TurkNet, AtlantisNet |
 | ZTE | 368N | ALL | Y | KPN (device is called "Experia Box v9"), Türk Telekom |
 | Zyxel | VMG3312-B10A, VMG3312-B10B | ALL | Y | Türk Telekom |
