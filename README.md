@@ -40,6 +40,15 @@ sudo iw dev wlp0s12u1 set monitor none
 sudo ip link set dev wlp0s12u1 up
 ```
 
+> **Note on hardware:** monitor mode / frame injection is very driver-dependent.
+> In my testing the built-in **Intel Dual Band Wireless-AC 7265** (`iwlwifi`)
+> accepted `type monitor` but captured **zero** frames (no beacons even with a
+> strong signal), so the fingerprinter never locked onto a target. A USB adapter
+> with a MediaTek chipset — **MT7921AU** (USB id `0e8d:7961`, driver `mt7921u`) —
+> worked immediately. If the script keeps sweeping without finding your SSID,
+> suspect the adapter rather than the target. Known-good chipsets for this kind
+> of work include MediaTek `mt76`, Atheros `ath9k_htc`, and Realtek `rtl8812au`.
+
 You should seem something like this on affected devices:
 
 ```
@@ -205,5 +214,17 @@ the fingerprinting script using a wireless interface in monitor mode.
 | ZTE | 368N | ALL | Y | KPN (device is called "Experia Box v9"), Türk Telekom |
 | Zyxel | VMG3312-B10A, VMG3312-B10B | ALL | Y | Türk Telekom |
 | MitraStar | GPT-2541GNAC | up to at least ES_g8.4_100VNJ0b78 | Y | Movistar / Telefonica |
+
+## Not Vulnerable (Patched)
+
+These devices were tested dynamically with the fingerprinting script and reported
+`PATCHED_HOSTAPD`: they are Broadcom-based but run patched hostapd rather than the
+vulnerable `wps_monitor`, so they are **not** affected. Listing them here so others
+don't need to re-test the same models.
+
+| Vendor | Product | Assessment | Method |
+|--------|---------|------------|--------|
+| Sagemcom | F5598T | PATCHED_HOSTAPD | fingerprinting script |
+| Sagemcom | F380B | PATCHED_HOSTAPD | fingerprinting script |
 
 
