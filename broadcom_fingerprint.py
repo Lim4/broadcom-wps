@@ -70,6 +70,19 @@ LENGTH_FIELD = 0x02
 MORE_FRAGMENTS = 0x01
 ETH_P_PAE = 0x888E
 
+# RSN (802.11i) suite selectors used to build a station-side RSN element that a
+# PMF-capable AP will accept for a plain (non-SAE) WPS enrollee association.
+RSN_OUI = b"\x00\x0f\xac"
+RSN_CIPHER_TKIP = RSN_OUI + b"\x02"
+RSN_CIPHER_CCMP = RSN_OUI + b"\x04"
+RSN_AKM_PSK = RSN_OUI + b"\x02"
+RSN_AKM_PSK_SHA256 = RSN_OUI + b"\x06"
+# RSN Capabilities: MFPC (bit 7, 0x0080) capable but NOT MFPR (bit 6, 0x0040)
+# required, so the AP permits the association while the station advertises PMF
+# support. Echoing the AP's MFPR=1 while doing open auth is what gets rejected.
+RSN_CAPS_MFPC = 0x0080
+RSN_CAPS_MFPR = 0x0040
+
 
 class FingerprintError(RuntimeError):
     """Operator-visible environmental or RF failure."""
@@ -717,7 +730,11 @@ def _association_frame(
     *,
     minimal: bool,
 ) -> Packet:
-    rates = b"\x82\x84\x8b\x96\x0c\x12\x18\x24" if minimal else target.rates
+    # Both attempts carry the AP's advertised supported + extended rates so the
+    # BSSBasicRateSet check (status 18) is satisfied. The difference is security:
+    # the "full" attempt includes a sanitized RSN (PSK/CCMP, PMF-capable), while
+    # the "minimal" attempt drops RSN entirely for open/legacy APs.
+    rates = target.rates
     frame = (
         RadioTap()
         / Dot11(
@@ -731,14 +748,94 @@ def _association_frame(
         / Dot11Elt(ID="SSID", info=target.ssid.encode("utf-8"))
         / Dot11Elt(ID="Rates", info=rates)
     )
-    if not minimal and target.extended_rates:
+    if target.extended_rates:
         frame /= Dot11Elt(ID=50, info=target.extended_rates)
     if not minimal and target.rsn is not None:
-        frame /= Dot11Elt(ID=48, info=target.rsn)
+        station_rsn = _station_rsn_element(target.rsn)
+        if station_rsn is not None:
+            frame /= Dot11Elt(ID=48, info=station_rsn)
     if not minimal and target.wpa is not None:
         frame /= Dot11Elt(ID=221, info=target.wpa)
     frame /= Dot11Elt(ID=221, info=WPS_ASSOCIATION_IE)
     return frame
+
+
+ASSOC_STATUS_MEANINGS = {
+    1: "unspecified failure",
+    10: "cannot support all requested capabilities",
+    12: "association denied, reason outside scope of this standard",
+    17: "association denied; AP unable to handle additional stations",
+    18: "denied; STA not supporting all BSSBasicRateSet data rates",
+    27: "association denied; HT features required but not supported",
+    31: "association denied; RSN cipher/AKM policy violation",
+    40: "invalid information element",
+    41: "invalid group cipher",
+    42: "invalid pairwise cipher",
+    43: "invalid AKMP (authentication/key management)",
+    45: "invalid RSN capabilities",
+    46: "cipher suite rejected per security policy",
+    53: "invalid PMKID",
+    77: "unsupported finite cyclic group (SAE)",
+}
+
+
+def _assoc_status_meaning(status: int) -> str:
+    return ASSOC_STATUS_MEANINGS.get(status, "see IEEE 802.11 status code table")
+
+
+def _station_rsn_element(ap_rsn: bytes | None) -> bytes | None:
+    """Derive a station-side RSN element the AP will accept for open-auth WPS.
+
+    The AP's advertised RSN is parsed for its group and pairwise ciphers, but the
+    AKM list is reduced to PSK (the only key-management a plain WPS enrollee can
+    satisfy) and the RSN Capabilities are rewritten so PMF is advertised as
+    *capable* (MFPC) but not *required* (MFPR clear). Echoing the AP's RSN
+    verbatim keeps SAE/MFPR, which a non-SAE station cannot honor, and the AP
+    answers the association with status 18/43.
+    """
+
+    group_cipher = RSN_CIPHER_CCMP
+    pairwise = [RSN_CIPHER_CCMP]
+    akm_has_psk_sha256 = False
+
+    if ap_rsn is not None:
+        try:
+            # Layout: version(2) group(4) pcount(2) pairwise[...] acount(2) akm[...]
+            offset = 2
+            group_cipher = ap_rsn[offset : offset + 4] or group_cipher
+            offset += 4
+            pcount = int.from_bytes(ap_rsn[offset : offset + 2], "little")
+            offset += 2
+            advertised_pairwise = [
+                ap_rsn[offset + i * 4 : offset + i * 4 + 4] for i in range(pcount)
+            ]
+            offset += pcount * 4
+            acount = int.from_bytes(ap_rsn[offset : offset + 2], "little")
+            offset += 2
+            advertised_akm = [
+                ap_rsn[offset + i * 4 : offset + i * 4 + 4] for i in range(acount)
+            ]
+            # Prefer CCMP; fall back to whatever pairwise cipher the AP offered.
+            if advertised_pairwise:
+                pairwise = (
+                    [RSN_CIPHER_CCMP]
+                    if RSN_CIPHER_CCMP in advertised_pairwise
+                    else advertised_pairwise[:1]
+                )
+            akm_has_psk_sha256 = RSN_AKM_PSK_SHA256 in advertised_akm
+        except (IndexError, ValueError):
+            group_cipher = RSN_CIPHER_CCMP
+            pairwise = [RSN_CIPHER_CCMP]
+
+    # When the AP mandates PMF, PSK-SHA256 is the correct AKM; otherwise plain PSK.
+    akm = RSN_AKM_PSK_SHA256 if akm_has_psk_sha256 else RSN_AKM_PSK
+
+    body = b"\x01\x00"  # RSN version 1
+    body += group_cipher
+    body += len(pairwise).to_bytes(2, "little") + b"".join(pairwise)
+    body += (1).to_bytes(2, "little") + akm
+    body += RSN_CAPS_MFPC.to_bytes(2, "little")  # MFPC set, MFPR clear
+    return body
 
 
 def _station_data_frame(
@@ -849,12 +946,14 @@ class ScapyFingerprintBackend:
         *,
         response_timeout: float = DEFAULT_RESPONSE_TIMEOUT,
         partial_release_delay: float = PARTIAL_SESSION_RELEASE_DELAY,
+        debug_assoc: bool = False,
     ) -> None:
         self.interface = interface
         self.target = target
         self.pcap = pcap
         self.response_timeout = response_timeout
         self.partial_release_delay = partial_release_delay
+        self.debug_assoc = debug_assoc
         self.packets: queue.Queue[Packet] = queue.Queue()
         self._pcap_lock = threading.Lock()
         self._seen_eap: dict[str, set[bytes]] = {}
@@ -1003,6 +1102,10 @@ class ScapyFingerprintBackend:
             except queue.Empty:
                 return
 
+    def _debug_assoc(self, message: str) -> None:
+        if self.debug_assoc:
+            print(f"[assoc] {message}", file=sys.stderr)
+
     def _associate(self, station: str, deadline: float) -> None:
         seen_association_responses: set[int] = set()
 
@@ -1025,7 +1128,7 @@ class ScapyFingerprintBackend:
             seen_association_responses.add(sequence)
             return True
 
-        for _attempt in range(3):
+        for attempt in range(3):
             self._transmit(_authentication_frame(station, self.target))
             try:
                 auth = self._wait_for(
@@ -1037,11 +1140,16 @@ class ScapyFingerprintBackend:
                     remaining(1.5),
                 )
             except TimeoutError:
+                self._debug_assoc(
+                    f"attempt {attempt + 1}: no authentication response "
+                    f"(station {station} may be filtered or off-channel)"
+                )
                 continue
             if int(auth[Dot11Auth].status) != 0:
                 raise FingerprintError(
                     f"authentication rejected with status {int(auth[Dot11Auth].status)}"
                 )
+            self._debug_assoc(f"attempt {attempt + 1}: authentication accepted")
             for minimal in (False, True):
                 self._transmit(
                     _association_frame(station, self.target, minimal=minimal)
@@ -1052,9 +1160,23 @@ class ScapyFingerprintBackend:
                         remaining(2.0),
                     )
                 except TimeoutError:
+                    self._debug_assoc(
+                        f"attempt {attempt + 1} ({'minimal' if minimal else 'full'}): "
+                        "no association response"
+                    )
                     continue
-                if int(response[Dot11AssoResp].status) == 0:
+                status = int(response[Dot11AssoResp].status)
+                if status == 0:
+                    self._debug_assoc(
+                        f"attempt {attempt + 1} "
+                        f"({'minimal' if minimal else 'full'}): association accepted"
+                    )
                     return
+                self._debug_assoc(
+                    f"attempt {attempt + 1} ({'minimal' if minimal else 'full'}): "
+                    f"association rejected with status {status} "
+                    f"({_assoc_status_meaning(status)})"
+                )
         raise FingerprintError("could not authenticate and associate selected target")
 
     def _send_eapol(self, station: str, ethernet_record: bytes) -> None:
@@ -1267,6 +1389,11 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--interface", required=True, help="existing monitor interface")
     parser.add_argument("--ssid", required=True, help="exact SSID to locate")
+    parser.add_argument(
+        "--debug-assoc",
+        action="store_true",
+        help="log 802.11 authentication/association status codes to stderr",
+    )
     return parser
 
 
@@ -1282,7 +1409,13 @@ def _append_warning(result: FingerprintResult, warning: str) -> FingerprintResul
     return dataclass_replace(result, warning=combined)
 
 
-def run_live(interface: str, ssid: str, *, output_root: Path | None = None) -> int:
+def run_live(
+    interface: str,
+    ssid: str,
+    *,
+    output_root: Path | None = None,
+    debug_assoc: bool = False,
+) -> int:
     encoded_ssid = ssid.encode("utf-8")
     if not encoded_ssid or len(encoded_ssid) > 32:
         raise FingerprintError("SSID must encode to 1..32 UTF-8 bytes")
@@ -1311,7 +1444,9 @@ def run_live(interface: str, ssid: str, *, output_root: Path | None = None) -> i
                 target = select_target(observations, ssid)
         target = discovery.revalidate(target)
         if target.wps_advertised:
-            with ScapyFingerprintBackend(interface, target, writer) as backend:
+            with ScapyFingerprintBackend(
+                interface, target, writer, debug_assoc=debug_assoc
+            ) as backend:
                 result = fingerprint_target(target, backend)
         else:
             result = FingerprintResult(
@@ -1364,7 +1499,7 @@ def run_live(interface: str, ssid: str, *, output_root: Path | None = None) -> i
 def main(argv: list[str] | None = None) -> int:
     options = build_parser().parse_args(argv)
     try:
-        return run_live(options.interface, options.ssid)
+        return run_live(options.interface, options.ssid, debug_assoc=options.debug_assoc)
     except FingerprintError as error:
         print(f"error: {error}", file=sys.stderr)
         return 2
