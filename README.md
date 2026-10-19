@@ -40,7 +40,7 @@ sudo iw dev wlp0s12u1 set monitor none
 sudo ip link set dev wlp0s12u1 up
 ```
 
-You should seem something like this:
+You should seem something like this on affected devices:
 
 ```
 sudo uv run --with scapy broadcom_fingerprint.py --interface wlp0s12u1 --ssid VOO-111317
@@ -81,6 +81,40 @@ JSON:       /tmp/broadcom-fingerprint-20261014T205852.234368Z/result.json
 PCAP:       /tmp/broadcom-fingerprint-20261014T205852.234368Z/traffic.pcap
 ```
 
+On patched devices you'll see:
+
+```
+sudo uv run --with scapy broadcom_fingerprint.py --interface wlp0s12u1 --ssid MY-AP
+Scanning channels 1-13 for SSID 'MY-AP' (sweep 1)...
+SSID:       MY-AP
+BSSID:      38:35:fb:13:4b:42
+Channel:    1
+Vendor:     SagemCom
+Model:      SagemcomFast5336v_BBOX3
+Assessment: PATCHED_HOSTAPD
+JSON:       /tmp/broadcom-fingerprint-20261014T205852.234368Z/result.json
+PCAP:       /tmp/broadcom-fingerprint-20261014T205852.234368Z/traffic.pcap
+```
+
+If your device does not advertise WPS it's not affected and you'll see this:
+
+```
+sudo uv run --with scapy broadcom_fingerprint.py --interface wlx00c0ca588c7e --ssid MY-AP
+Scanning channels 1-13 for SSID 'MY-AP' (sweep 1)...
+SSID:       MY-AP
+BSSID:      1c:0b:8b:xx:xx:xx
+Channel:    6
+Vendor:     Unknown
+Model:      Unknown
+Assessment: INCONCLUSIVE
+JSON:       /tmp/broadcom-fingerprint-20261019T113912.161025Z/result.json
+PCAP:       /tmp/broadcom-fingerprint-20261019T113912.161025Z/traffic.pcap
+Warning: selected AP does not advertise WPS
+```
+
+
+
+
 The fingerprinting script relies on two things:
 1. the presence of Broadcom proprietary information elements
 2. an implementation quirk that can differentiate between Broadcom's wps_monitor and hostapd
@@ -91,8 +125,8 @@ while the user space implementation is not from their SDK. We use that signal
 to check if it's Broadcom or not.
 
 If it's a Broadcom AP, we send a zero-lenght fragmented frame to differentiate
-between Broadcom's wps_monitor and hostapd. hostapd sends a NACK while
-wps_monitor sends an ACK (in a nutshell).
+between Broadcom's wps_monitor and hostapd. hostapd sends an ACK while
+wps_monitor sends a NACK (in a nutshell).
 
 If we have both signals (Broadcom IE + implementation quirk), we can assess
 with a rather high confidence level that you're affected.
