@@ -163,6 +163,7 @@ the fingerprinting script using a wireless interface in monitor mode.
 |--------|---------|-----------|------------|------|
 | ARRIS | ARRIS SURFboard AC1200 | ALL | Y | - |
 | Arcadyan | VRV9517 | at least up to v6.00.18 | Y | KPN (aka "Experia Box V10A"), SPARK |
+| Askey | Speedport W 723V Typ A | ALL | Y | Deutsche Telekom | 
 | Askey | TCG3000 | ALL | Y | Orange Belgium, VOO |
 | Askey | RTF3505VW | up to at least 203_n43 | Y | Movistar / Telefonica |
 | CastleNET | NetMASTER Infinity 401MP | ALL | Y | Türksat Cablenet |
