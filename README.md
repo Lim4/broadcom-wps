@@ -201,7 +201,11 @@ the fingerprinting script using a wireless interface in monitor mode.
 | Sagemcom | F@ST 3864 / 3864OP | ALL | Y | Optus |
 | Sagemcom | F@ST 4353 | ALL | Y | Belong |
 | Sagemcom | F@st 5336 | ALL | Y | Proximus |
+| Sagemcom | F@ST 2504 / 2504N | 6.14.2a4 | Y | Sky |
 | Sercomm | Group ONT L3 (253794565) | V1 | LIKELY | Vodafone / Lowi |
+| Sky | SR203 | at least 1.3.8.0.878-2020w47.2 | Y | Sky |
+| Sky | SkyHub SR101 | 3.4.5 | Y | Sky |
+| Sky | SkyHub SR102 | 2.8.8 | Y | Sky |
 | Tenda | D301 / N300 | - | - | - |
 | TP-Link | Archer C3150 | ALL | Y | Türk Telekom |
 | TP-Link | Archer C5400 | ALL | Y | Türk Telekom |
@@ -226,5 +230,7 @@ don't need to re-test the same models.
 |--------|---------|------------|--------|
 | Sagemcom | F5598T | PATCHED_HOSTAPD | fingerprinting script |
 | Sagemcom | F380B | PATCHED_HOSTAPD | fingerprinting script |
+| Sky | Q Hub ER110 | PATCHED_HOSTAPD | YARA |
+| Sky | Q Hub ER115 | PATCHED_HOSTAPD | YARA |
 
 
