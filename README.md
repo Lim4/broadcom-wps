@@ -202,6 +202,7 @@ the fingerprinting script using a wireless interface in monitor mode.
 | Sagemcom | F@ST 4353 | ALL | Y | Belong |
 | Sagemcom | F@st 5336 | ALL | Y | Proximus |
 | Sercomm | Group ONT L3 (253794565) | V1 | LIKELY | Vodafone / Lowi |
+| Sky | SR203 | at least 1.3.8.0.878-2020w47.2 | Y | Sky |
 | Tenda | D301 / N300 | - | - | - |
 | TP-Link | Archer C3150 | ALL | Y | Türk Telekom |
 | TP-Link | Archer C5400 | ALL | Y | Türk Telekom |
