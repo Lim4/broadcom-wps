@@ -187,6 +187,7 @@ the fingerprinting script using a wireless interface in monitor mode.
 | Huawei | B315 | - | ALL | - |
 | Huawei | B593 | - | ALL | - |
 | Huawei | Spedport W 724V Typ A | ALL | Y | Deutsche Telekom |
+| Huawei | Speedport Hybrid | ALL | Y | Deutsche Telekom |
 | Huawei | WS880 | - | ALL | - |
 | NetComm | NF4V | ALL | Y | Exetel, Harbour ISP, Spintel |
 | NetComm | NF10W | ALL | Y | Exetel, Aussie Broadband, Harbour ISP |
