@@ -163,6 +163,7 @@ the fingerprinting script using a wireless interface in monitor mode.
 |--------|---------|-----------|------------|------|
 | ARRIS | ARRIS SURFboard AC1200 | ALL | Y | - |
 | Arcadyan | VRV9517 | at least up to v6.00.18 | Y | KPN (aka "Experia Box V10A"), SPARK |
+| Askey | Speedport W 723V Typ A | ALL | Y | Deutsche Telekom | 
 | Askey | TCG3000 | ALL | Y | Orange Belgium, VOO |
 | Askey | RTF3505VW | up to at least 203_n43 | Y | Movistar / Telefonica |
 | CastleNET | NetMASTER Infinity 401MP | ALL | Y | Türksat Cablenet |
@@ -185,6 +186,8 @@ the fingerprinting script using a wireless interface in monitor mode.
 | Huawei | B310 | - | ALL | - |
 | Huawei | B315 | - | ALL | - |
 | Huawei | B593 | - | ALL | - |
+| Huawei | Spedport W 724V Typ A | ALL | Y | Deutsche Telekom |
+| Huawei | Speedport Hybrid | ALL | Y | Deutsche Telekom |
 | Huawei | WS880 | - | ALL | - |
 | NetComm | NF4V | ALL | Y | Exetel, Harbour ISP, Spintel |
 | NetComm | NF10W | ALL | Y | Exetel, Aussie Broadband, Harbour ISP |
@@ -202,7 +205,9 @@ the fingerprinting script using a wireless interface in monitor mode.
 | Sagemcom | F@ST 4353 | ALL | Y | Belong |
 | Sagemcom | F@st 5336 | ALL | Y | Proximus |
 | Sagemcom | F@ST 2504 / 2504N | 6.14.2a4 | Y | Sky |
+| Sercomm | Easybox 804 | up to 05.02_5_4_8_1_325_1_21_1_8 at least | Y | Vodafone (DE) |
 | Sercomm | Group ONT L3 (253794565) | V1 | LIKELY | Vodafone / Lowi |
+| Sercomm | Speedport W 724V Typ C | ? | LIKELY | Deutsche Telekom |
 | Sky | SR203 | at least 1.3.8.0.878-2020w47.2 | Y | Sky |
 | Sky | SkyHub SR101 | 3.4.5 | Y | Sky |
 | Sky | SkyHub SR102 | 2.8.8 | Y | Sky |
