@@ -239,4 +239,12 @@ don't need to re-test the same models.
 | Sky | Q Hub ER110 | PATCHED_HOSTAPD | YARA |
 | Sky | Q Hub ER115 | PATCHED_HOSTAPD | YARA |
 
+## Inconclusive Results
 
+These devices were tested dynamically with the fingerprinting script, but the result did not establish whether they are vulnerable.
+
+| Vendor | Product | Version | Assessment | Method | ISP |
+|--------|---------|---------|------------|--------|-----|
+| Sagemcom | FAST 5670 | Unknown | INCONCLUSIVE | fingerprinting script; WPS not advertised | MásMóvil España |
+
+The access point did not advertise WPS in the captured frames. The test is inconclusive and does not establish whether this model or firmware is vulnerable. SSID and BSSID are omitted for privacy.
