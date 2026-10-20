@@ -227,5 +227,7 @@ don't need to re-test the same models.
 |--------|---------|------------|--------|
 | Sagemcom | F5598T | PATCHED_HOSTAPD | fingerprinting script |
 | Sagemcom | F380B | PATCHED_HOSTAPD | fingerprinting script |
+| Sky | Q Hub ER110 | PATCHED_HOSTAPD | YARA |
+| Sky | Q Hub ER115 | PATCHED_HOSTAPD | YARA |
 
 
