@@ -164,7 +164,7 @@ the fingerprinting script using a wireless interface in monitor mode.
 | ARRIS | ARRIS SURFboard AC1200 | ALL | Y | - |
 | Arcadyan | VRV9517 | at least up to v6.00.18 | Y | KPN (aka "Experia Box V10A"), SPARK |
 | Askey | TCG3000 | ALL | Y | Orange Belgium, VOO |
-| Askey | RTF3505VW | ALL | Y | Movistar / Telefonica |
+| Askey | RTF3505VW | ALL | Y | Movistar / O2 / Telefonica |
 | CastleNET | NetMASTER Infinity 401MP | ALL | Y | Türksat Cablenet |
 | CastleNET | NetMASTER CBW-383ZN | ALL | Y | Türksat Cablenet |
 | CastleNET | NetMASTER CBW-383Z4 | ALL | Y | Türksat Cablenet |
@@ -181,7 +181,7 @@ the fingerprinting script using a wireless interface in monitor mode.
 | Cisco | WAP571 | ALL | Y | - |
 | Cisco | WAP571E | ALL | Y | - |
 | Cisco | WAP581 | ALL | Y | - |
-| Comtrend | VG8050 | ALL (at least up to 2025?) | Y | Movistar / O2 / Telefonica | 
+| Comtrend | VG8050 | ALL | Y | Movistar / O2 / Telefonica | 
 | Huawei | B310 | - | ALL | - |
 | Huawei | B315 | - | ALL | - |
 | Huawei | B593 | - | ALL | - |
@@ -217,7 +217,7 @@ the fingerprinting script using a wireless interface in monitor mode.
 | ZTE | F680 v4 | ALL | Y | MasMovil, ThailandToT, Telkom, Linkstar, Mnc, Viettel, VNPT, SeteTec, EgyptTEData, Ais, MTN, FranceReunicable, RTC, Indosat, MAXCom, EKT, OSP, Moldtelecom, Türk Telekom, TurkNet, AtlantisNet |
 | ZTE | 368N | ALL | Y | KPN (device is called "Experia Box v9"), Türk Telekom |
 | Zyxel | VMG3312-B10A, VMG3312-B10B | ALL | Y | Türk Telekom |
-| MitraStar | GPT-2541GNAC | ALL | Y | Movistar / Telefonica |
+| MitraStar | GPT-2541GNAC | ALL | Y | Movistar / O2 / Telefonica |
 
 ## Not Vulnerable (Patched)
 
