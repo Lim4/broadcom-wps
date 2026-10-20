@@ -205,6 +205,7 @@ the fingerprinting script using a wireless interface in monitor mode.
 | Sagemcom | F@st 5336 | ALL | Y | Proximus |
 | Sagemcom | F@ST 2504 / 2504N | 6.14.2a4 | Y | Sky |
 | Sercomm | Group ONT L3 (253794565) | V1 | LIKELY | Vodafone / Lowi |
+| Sercomm | Speedport W 724V Typ C | ? | LIKELY | Deutsche Telekom |
 | Sky | SR203 | at least 1.3.8.0.878-2020w47.2 | Y | Sky |
 | Sky | SkyHub SR101 | 3.4.5 | Y | Sky |
 | Sky | SkyHub SR102 | 2.8.8 | Y | Sky |
